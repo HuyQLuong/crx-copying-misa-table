@@ -1,0 +1,10 @@
+export const MESSAGE_EVENT = {
+    EXTRACT_MISA_DATA: 'EXTRACT_MISA_DATA',
+    CRAWL_MISA_TABLE: 'CRAWL_MISA_TABLE',
+    RECEIVE_MISA_DATA: 'RECEIVE_MISA_DATA',
+
+}
+
+export const MISA_CLASS = {
+    MISA_TABLE: 'ms-table'
+}

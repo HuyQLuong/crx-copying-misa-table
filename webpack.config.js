@@ -6,6 +6,8 @@ var webpack = require('webpack'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   TerserPlugin = require('terser-webpack-plugin');
 var { CleanWebpackPlugin } = require('clean-webpack-plugin');
+var NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
+
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
@@ -44,6 +46,23 @@ var options = {
     devtools: path.join(__dirname, 'src', 'pages', 'Devtools', 'index.js'),
     panel: path.join(__dirname, 'src', 'pages', 'Panel', 'index.jsx'),
   },
+  resolve: {
+    fallback: {
+      fs: require.resolve('fs'),
+      assert: require.resolve('assert'),
+      crypto: require.resolve('crypto-browserify'),
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
+      os: require.resolve('os-browserify/browser'),
+      stream: require.resolve('stream-browserify'),
+      dns: require.resolve('dns'),
+      tls: require.resolve('tls'),
+      net: require.resolve('net'),
+      dgram: require.resolve('dgram'),
+      http2: require.resolve('http2'),
+    },
+  },
+
   chromeExtensionBoilerplate: {
     notHotReload: ['background', 'contentScript', 'devtools'],
   },
@@ -110,6 +129,7 @@ var options = {
       .concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
   },
   plugins: [
+    new NodePolyfillPlugin(),
     new CleanWebpackPlugin({ verbose: false }),
     new webpack.ProgressPlugin(),
     // expose and write the allowed env vars on the compiled bundle
